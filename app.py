@@ -14,7 +14,7 @@ app.config['SECRET_KEY'] = 'Cod3 To Giv3'
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:pwd@db/codetogive'
 
 # Connects Heroku PostgreSQL database to Flask app
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://ikkusuespadocw:d092876418fcf499cba6f95bce285ea183e257c2c64c8f879bf91cd65a5e8c71@ec2-52-3-60-53.compute-1.amazonaws.com:5432/d27lnn9bvi72hg'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://tdlixfnucgirtt:f4b8e06465c23212247ad430912af82eac34db6988e6bc263ce046fa03cd466d@ec2-52-21-136-176.compute-1.amazonaws.com:5432/d3c01e59q00k31'
 
 
 db = SQLAlchemy(app)
@@ -24,8 +24,8 @@ login_manager = LoginManager()
 login_manager.login_view = 'login'
 login_manager.init_app(app)
 
-with app.app_context():
-    db.create_all()
+# with app.app_context():
+#     db.create_all()
 
 # Initialize table within database to store Users and define parameters
 # (Open to be changed as project progresses along)
@@ -36,13 +36,34 @@ class User(UserMixin, db.Model):
     firstname = db.Column(db.String(80), unique=False, nullable=False)
     lastname = db.Column(db.String(80), unique=False, nullable=False)
     password = db.Column(db.String(300), unique=False, nullable=False)
+    email = db.Column(db.String(80), unique=False, nullable=False)
+    phone = db.Column(db.String(15), unique=False, nullable=False)
+    age = db.Column(db.Integer, unique=False, nullable=False)
 
-    def __init__(self, username, firstname, lastname, password):
+    def __init__(self, username=None, firstname=None, lastname=None, password=None, email=None, phone=None, age=None):
         self.username = username
         self.firstname = firstname
         self.lastname = lastname
         self.password = password
+        self.email = email
+        self.phone = phone
+        self.age = age
 
+    def serialize(self):
+        return {"id": self.id,
+                "username": self.username,
+                "firstname": self.firstname,
+                "lastname": self.lastname,
+                "password": self.password,
+                "email": self.email,
+                "phone": self.phone,
+                "age": self.age}
+
+
+with app.app_context():
+    db.create_all()
+
+# ----------------------------------------------------------------#
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -54,6 +75,7 @@ def load_user(user_id):
 def index():
     return render_template('index.html')
 
+
 # Landing Route
 @app.route('/index')
 def index1():
@@ -61,10 +83,11 @@ def index1():
 
 
 # Load Profile
-@app.route('/profile')
+@app.route('/profile/<username>')
 @login_required
-def profile():
-    return render_template('profile.html', username=current_user.username)
+def profile(username):
+    return render_template('profile.html', user=current_user.serialize())
+
 
 # Render Login Page
 @app.route('/login')
@@ -90,8 +113,9 @@ def login_post():
     # Register login with Login Manager
     login_user(user)
 
+
     # Load profile
-    return redirect(url_for('profile'))
+    return redirect(url_for('profile', username=user.username))
 
 
 # Render Register Page
@@ -103,13 +127,14 @@ def register():
 # Register Functionality
 @app.route('/register', methods=['POST'])
 def register_post():
-    db.create_all()
-    db.session.commit()
     username = request.form['username']
     firstname = request.form['firstname']
     lastname = request.form['lastname']
     password1 = request.form['password1']
     password2 = request.form['password2']
+    email = request.form['email']
+    phone = request.form['phone']
+    age = request.form['age']
     user = User.query.filter_by(username=username).first() # check to see if username exists
     if user:
         flash('Username already exists')
@@ -118,7 +143,7 @@ def register_post():
 
     if password1 == password2:
         print("sup")
-        newUser = User(username=username, firstname=firstname, lastname=lastname, password=generate_password_hash(password1, method='sha256'))
+        newUser = User(username=username, firstname=firstname, lastname=lastname, password=generate_password_hash(password1, method='sha256'), email=email, phone=phone, age=age)
         db.session.add(newUser)
         db.session.commit()
         user = User.query.filter_by(username=username).first()
