@@ -108,9 +108,6 @@
   }
   .register-right {
     padding-top: 6rem;
-    background-image: url("../assets/background.png");
-    background-repeat: no-repeat;
-    background-size: cover;
   }
   .register-form h1 {
     font-size: 2rem;

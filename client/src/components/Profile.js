@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 const Profile = () => {
+  //Testing to see if user info is stored
   const user = useSelector((state) => state.user.value);
   return (
     <div>
