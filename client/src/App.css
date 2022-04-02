@@ -1,0 +1,26 @@
+:root {
+  --background: white;
+  --background--secondary: #f1f5f9;
+  --text-primary: black;
+  --text-secondary: rgb(54, 53, 53);
+  --box-shadow: rgba(4, 17, 29, 0.25) 0px 0px 8px 0px;
+  --card-box-shadow: rgba(74, 74, 75, 0.25) 0 3px 3px 0;
+  --border: rgb(230, 230, 230);
+  --icon: rgba(0, 0, 0, 0.151);
+  --button-color: #fada03;
+  --background-color: #91c0c8;
+  --active-nav: #f05740;
+}
+[data-theme="dark"] {
+  --background: #1a1919;
+  --background--secondary: #222121;
+  --text-primary: white;
+  --text-secondary: rgb(168, 167, 167);
+  --accent: darkred;
+  --box-shadow: rgba(133, 130, 130, 0.315) 0px 0px 3px 0px;
+  --card-box-shadow: rgba(179, 177, 177, 0.25) 0 3px 3px 0;
+  --border: #4d4b4f;
+  --button-color: #fada03;
+  --background-color: #91c0c8;
+  --active-nav: #f05740;
+}
