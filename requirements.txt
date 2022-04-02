@@ -1,0 +1,7 @@
+flask
+Flask-SQLAlchemy
+Flask-Migrate
+psycopg2
+Flask-SocketIO
+Flask-Cors
+Flask_Login
