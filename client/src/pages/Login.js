@@ -67,7 +67,7 @@ const Login = () => {
           <p className="haveAccount">
             Don't have an account? <Link to="/register">Register </Link>
           </p>
-          <button onClick={handleSubmit}>Login</button>
+          <button type="submit">Login</button>
         </form>
       </div>
     </div>
