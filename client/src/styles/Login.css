@@ -79,11 +79,30 @@
   padding: 0.5rem;
   align-self: center;
   color: white;
-  background-color: var(--active-nav);
+  background-color: var(--background-color);
   font-size: 1.5rem;
   font-weight: bold;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .login-left {
+    display: none;
+  }
+  .login-right {
+    padding-top: 8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .login-left {
+    display: none;
+  }
+  .login-right {
+    padding-top: 6rem;
+  }
 }
 
 @media (max-width: 768px) {
