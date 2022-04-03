@@ -105,6 +105,18 @@
   }
 }
 
+@media (max-width: 768px) {
+  .login-left {
+    display: none;
+  }
+  .login-right {
+    padding-top: 8rem;
+    background-image: url("../assets/background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}
+
 @media (max-width: 500px) {
   .login-left {
     display: none;
