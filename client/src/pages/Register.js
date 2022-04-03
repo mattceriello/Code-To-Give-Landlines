@@ -94,7 +94,7 @@ const Register = () => {
           <p className="dontHaveAccount">
             Already have an account? <Link to="/login">Login </Link>
           </p>
-          <button>Login</button>
+          <button>Register</button>
         </form>
       </div>
     </div>

@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import Profile from "../components/Profile";
 import { setCredentials } from "../features/user/user";
 import loginImg from "../assets/login.svg";
-import blackWave from "../assets/blackwave.svg";
 import "../styles/Register.css";
 import { Link } from "react-router-dom";
 import { useLoginMutation } from "../services/userApi";
@@ -32,8 +31,8 @@ const Login = () => {
     }
   };
   return (
-    <div className="register">
-      <div className="register-left">
+    <div className="login">
+      <div className="login-left">
         <div className="left-wrapper">
           <p>
             We transform, through Christ, the lives of those facing
@@ -68,7 +67,7 @@ const Login = () => {
           <p className="haveAccount">
             Don't have an account? <Link to="/register">Register </Link>
           </p>
-          <button onClick={handleSubmit}>Login</button>
+          <button type="submit">Login</button>
         </form>
       </div>
     </div>

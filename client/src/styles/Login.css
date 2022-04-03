@@ -79,11 +79,12 @@
   padding: 0.5rem;
   align-self: center;
   color: white;
-  background-color: var(--active-nav);
+  background-color: var(--background-color);
   font-size: 1.5rem;
   font-weight: bold;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 @media (max-width: 768px) {
@@ -92,9 +93,6 @@
   }
   .login-right {
     padding-top: 8rem;
-    background-image: url("../assets/background.png");
-    background-repeat: no-repeat;
-    background-size: cover;
   }
 }
 
