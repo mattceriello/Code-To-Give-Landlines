@@ -96,6 +96,15 @@
   }
 }
 
+@media (max-width: 768px) {
+  .login-left {
+    display: none;
+  }
+  .login-right {
+    padding-top: 6rem;
+  }
+}
+
 @media (max-width: 500px) {
   .login-left {
     display: none;
