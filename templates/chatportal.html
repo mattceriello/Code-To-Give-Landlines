@@ -34,49 +34,34 @@
 
             <ul class="nav navbar-nav navbar-right" style = "padding: 7px;">
                 <li class="nav-item">
-              <a class="nav-link" href="login" style="color: #FFFFFF">Login</a>
+              <a class="nav-link" href="chatportal" style="color: #FFFFFF">Chat</a>
+                </li>
+                <li class="nav-item">
+              <a class="nav-link" href="profile" style="color: #FFFFFF">Profile</a>
             </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('logout') }}" class="navbar-item" style="color: #FFFFFF">Logout</a>
+                </li>
             </ul>
 
         </div>
     </nav>
+      <br><br>
       <div class="login" style = "text-align: center;">
-        <h1>Register for Atlanta Mission</h1>
-        <form action='/register' method="post">
-          <p>
-              Username: <br>
-              <input type="text" name="username" id = "username" placeholder="Username">
-          </p>
-            <p>Firstname: <br>
-            <input type="text" name="firstname" id = "firstname" placeholder="First Name">
-          </p>
-            <p>Lastname: <br>
-            <input type="text" name="lastname" id = "lastname" placeholder="Last Name">
-          </p>
-            <p>Email: <br>
-            <input type="text" name="email" id = "email" placeholder="Email">
-          </p>
-            <p>Phone Number: <br>
-            <input type="text" name="phone" id = "phone" placeholder="Phone">
-          </p>
-            <p>Age: <br>
-            <input type="text" name="age" id = "age" placeholder="Age">
-          </p>
-
-          <p>Password: <br>
-            <input type="text" name="password1" id = "password1" placeholder="Password">
-          </p>
-          <p>Retype Password: <br>
-            <input type="text" name="password2" id = "password2" placeholder="Password">
-          </p>
-
-            <div id="container">
-
-            <input type = "submit" name = "subButt" id = "subButt" value = "Submit">
-            </div>
+        <h1>Atlanta Mission Chat</h1>
+        <form action="/profile/chat" method="POST">
+            <h1 class="h2 mb-3 font-weight-normal">Enter Chat Room for Atlanta Mission</h1>
+            <br><br>
+            <p>Enter username: <br>
+            <input type="text" id="username" name="username" placeholder="Username" required autofocus>
+            </p>
+            <br>
+            <p>Enter room: <br>
+            <input type="text" id="room" name="room" placeholder="Room" required>
+            <br><br>
+            <button class="btn btn-lg btn-primary btn-block" value="submit">Start Chat</button>
         </form>
       </div>
-
    </main>
 </body>
 </html>
