@@ -1,0 +1,79 @@
+{% extends "microblog/base.html" %}
+
+
+{% block title %}
+        <title>Post Details</title>
+{% endblock title %}
+
+{% block post %}
+<div class="article-metadata p-1 mb-4">
+    <h3 class="pb-0 mb-0 ml-1"> Detailed View</h3>
+    <small class="text-muted">&nbsp; Get the detailed view of the post here</small>
+</div>
+
+      <div class="card border-info p-2 mt-2 mb-3" style="width: 100%;">
+        <article class="media p-1 m-1">
+            <img src="{{object.username.profile.propic.url}}" alt="" class="rounded-circle img-thumbnail article-img">
+              <div class="media-body">
+                <div class="article-metadata">  
+                  <h3 style="display:inline; color: teal;" class="card-title mr-2">{{ object.author }}</h3>
+                  <h6 class="text-muted mt-1 mr-2" style="float: right;">{{ object.date_posted | date:"h:i A" }} • {{ object.date_posted | date:"M d, Y" }}</h6>
+                  <br>
+                  <h6 class="card-subtitle text-muted mt-2 mb-1">@{{object.username }}</h6>
+                </div>
+                <h3 class="card-title article-title mt-2" style="color: teal;">{{ object.title }}</h3>
+                <h6 class="card-text text-muted article-content">{{ object.content }}</h6>
+              </div>
+            </article>
+
+                {% if object.username == user %}
+                <div class="card-footer">
+                <div>
+                    <a class="btn btn-danger btn-sm mt-1 mb-1 mr-2" style="float: right;" href="{% url 'post_delete' object.id %}">Delete</a>
+                  <a class="btn btn-dark btn-sm mt-1 mb-1 mr-2" style="float: right;" href="{% url 'post_update' object.id %}">Update</a>
+                </div>
+            </div>
+              {% endif %}
+          </div>
+
+          <div class="card text-white bg-dark text-left mt-2 mb-3">
+            <div class="card-body">
+              <h5 class="card-title text-center">What is the tone of your post?</h5>
+              {% for each_emotion, value in emotion.items %}
+              <a class="btn btn-warning m-3 text-dark"><strong>{{ each_emotion }}: {{value}}%</strong></a>
+              {% endfor %}
+            </div>
+            <div class="card-footer text-muted">
+             <strong> Know the emotion of your post through Natural Language Processing! </strong>
+            </div>
+          </div>
+
+{% endblock post %}
+{% block sidebar %}
+<div class="card border-info mt-1 mb-2" style="width: 100%;">
+    <div class="card-body">
+      <h5 class="card-title" style="color: teal;">Tip</h5>
+      <h6 class="card-subtitle mb-2 text-muted">• You can update the post anytime within 24 hours of posting it</h6>
+      <hr>
+      <h6 class="card-subtitle mb-2 text-muted">• Once the post is deleted it cannot be recovered</h6>
+  </div>
+  </div>
+
+  <div class="card border-info mt-2 mb-2" style="width: 100%;">
+    <img class="card-img-top" src="https://content.atlantamission.org/content/uploads/2021/11/03210350/Jon-Lewis-Story.jpg" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title" style="color: teal;">Blogs - THE LIGHT</h5>
+      <p class="card-text">How to schedule a counselling session?</p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">How Our Homeless Shelters Work</li>
+      <li class="list-group-item">Morgan Stanley & Atlanta Mission Partnership</li>
+      <li class="list-group-item">Homelessness and Addiction</li>
+      <li class="list-group-item">A Day in the Life of an Atlanta Mission Counselor</li>
+    </ul>
+  </div>
+
+{% endblock sidebar %}
+
+{% block facts %}
+{% endblock facts %}

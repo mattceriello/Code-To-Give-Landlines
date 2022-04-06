@@ -1,0 +1,133 @@
+{% extends "microblog/base.html" %}
+
+
+{% block title %}
+    {% if title %}
+        <title>Atlanta Community-{{ title }}</title>
+    {% else %}
+        <title>Atlanta Community</title>
+    {% endif %}
+{% endblock title %}
+
+{% block post %}
+<div class="article-metadata p-1 mb-4">
+    <h2 class="pb-0 mb-0">Welcome to Atlanta Community</h2>
+    <h6 class="pb-0 mb-0">Let's restore lives!</h6>
+    <small class="text-muted">Transforming, through Christ, the lives of those facing homelessness</small>
+</div>
+    {% for each_post in post%}
+    <article class="media content-section border border-info">
+      <img src="{{each_post.username.profile.propic.url}}" alt="" class="rounded-circle img-thumbnail article-img">
+        <div class="media-body">
+          <div class="article-metadata">
+            <a class="mr-2" href="{% url 'individual_user' each_post.username %}">{{each_post.author }}</a>
+            <br>
+            <small class="text-muted">@{{each_post.username }}</small>
+            <small class="text-muted" style="float: right;">{{ each_post.date_posted | date:"M d, Y" }}</small>
+          </div>
+          <h5><a class="article-title" style="color:teal;" href="{% url 'individual_post' each_post.id %}">{{ each_post.title }}</a></h5>
+          <p class="article-content">{{ each_post.content }}</p>
+        </div>
+      </article>
+    {% endfor %}
+    <!-- {% for each_post in post%}
+    <div class="card border-info p-2 m-3">
+  <article class="media p-1 m-1" style="width: 97%;">
+      <img src="{{each_post.username.profile.propic.url}}" alt="" class="rounded-circle img-thumbnail article-img">
+        <div class="media-body">
+          <div class="article-metadata">  
+            <a class="card-title mr-2" style="color: teal;" href="{% url 'individual_user' each_post.username %}"><h6 style="display:inline;">{{ each_post.author }}</h6></a>
+            <small class="text-muted" style="float: right;">{{ each_post.date_posted | date:"M d, Y" }}</small>
+            <br>
+            <small class="card-subtitle text-muted">@{{each_post.username }}</small>
+          </div>
+          <h5><a class="card-title article-title" style="color: teal;" href="{% url 'individual_post' each_post.id %}">{{ each_post.title }}</a></h5>
+          <h6 class="card-text text-muted article-content">{{ each_post.content }}</h6>
+        </div>
+      </article>
+    </div>
+    {% endfor %} -->
+
+    {% if is_paginated %}
+    <div style="float: right;">
+      {% if page_obj.has_previous %}
+        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+          <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+      {% endif %}
+    </div>
+    {% endif %}
+{% endblock post %}
+
+{% block sidebar %}
+<div class="card border-info mt-1 mb-2" style="width: 100%;">
+  <div class="card-body">
+    <h5 class="card-title" style="color: teal;">We're on</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Connect with us on other platforms</h6>
+    <a class="eday" style="font-size: 230%;" data-toggle="tooltip" data-placement="bottom" id="em1" data-original-title="Facebook"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAFEklEQVRoge2ZW2gcVRjH/2c22SQ1aZLNRXNraFATvKFs0QdfTPTFiKCIQUwFwZQYkqIY8cELrKLFF2+0G4yVgpBgm4q0oO2DJvpgVUICKohtUFuSzcZoLrK7uezOzPn7kLRddmZ2ZjJJfGg+WHZ2zjnf/P7nfOc7c84CO7Zj17aJTfEyRF/TSvxuAM0SCIJsAlFFsJAECCQoGQVwgeQ4wZFL04FRhIT0+mhPAm77dLlO12Q3yf0kawCAJEgAWPte+xAmZRFKDug5Ijx9oCyyrQJuHIpX+JN4k8DTJPwWgNng0+4jBfKY7lNfi3ZWz225gFsHEk9KicMQDGQHdASfXmeeFD3RnorjWyIg2M/c1cJEn5SiwwjiGf5qHaB/JrfyIDqFumkCgv3ctXLd0mckHtxS+Kvtz/jy5ePRzuplOzbFAXzuNsMDQKu2itMI/er3LGC1MNG3zfBrZVI8UF5S+oEdX9YQumUw0U6JAS/wCoiWej/urc5FfbGCkjwFKZ1QdSKWIn6MpvDxTyuW7SX5xEJvzQnXApo+iZUJRTkPsHyj8HdW+vBecyH2FvssO+lcJIXHPl+08E0AWEhRNMZfNE+xliGkKOKQF/i7Kn0Yenh3Vvh0yxJ2gRzK1y05zW7eMbBcu75IbQjeJ4jD9xfB73OWpR3MmY7St6N7HAtQKXvoYYVtbchDbZFtfkgTkBUeJP1S0bvM2uYY7oSokIl2L9mmuS7XFHQypqN3OI5f/lavkKuSdvBrzyCfwhBfRZvQswpo2hu/h0TtRuFJ4PYKY78AwAvDcXw3lbRtb7FC1+y+GAnGgNF0n2bj3OwFniTKC4xu/1qSOLdReF7+LVsy/ZoJ2Od1kSryGyfvZEwHPcADACWCtgIkebMXeJJQTJJPPCm9wRMgZGOmX0OwkqjyAr9+aTBJR9kmax1SVGX6NQmh9W3ghuEtFMArPACwKNOj2Qi4cvzD/oAh5s1C6L76PEw8e73h/snfVvDS14tO4E1H15jviATJgBN4ACjOE6aTNtNyFaAk3zjg0bjmGJ5kPLO92SSecQpPsy5xaRPzmlN4CGDGVgCICa8T1o39vqA6ggcACVywFUBwzFW28ACvSeDPRc0R/Pr1WKYP4yQGR4zA1pP6ua9iyLncDetlRx8qMWw0fp5V8f5o/EodAFjViKQmncKDCkZsBVyaDozuqVqYAllnB08CZ/9YNZR9xBKIDAWzSzpOnV92M2EzO29SlQ3jmbzGORASEpKDTuCtyqzMAzwADJodRZq+tOs5Ikwi5eWVejPhCSZTqhY282sqYPpAWQTksc2CB4x1HMOTkMRRvNU47VgAANDvf4XknFv47CHkHp7EvC50d3tiAIh0FC+Q4qBbeLvFzSU8CHYh1Gh56Jt14xrtqThOoP9/hA/rb9x0MptP2533TGVlN8FTTuEtRbiEB/ClrkSet+OzPzpoE7ovT7aDPOPi4Wb8zuHJLzRlVxtCzZp3AQCindXLswU3PELBD+3h3Wei9PYEw5ov8ihC9ifTgNnrtJV1CnUO6Aq8M/2tAhyRRPlGFrIs8P8Q7LaL+Uxzfvq0bgu9NSeSSTaR7AOQdLMWWC1SEjiiKckmt/CAmxFIs/jLtfMAusvenTqkaegB2E6iziX8FIABVdXDVouUE9ucv1lDVHYXRPaRsoUSwe+fqWoN5Iv80gKfIgTw74qUwxeXFztOz31DcowCI6psGN+Mv1l3bMeudfsPP8EkRZOLDr8AAAAASUVORK5CYII="/></a>
+    <a class="eday" style="font-size: 230%;" data-toggle="tooltip" data-placement="bottom" id="em2" data-original-title="Instagram"><img src="data:image/png;base64,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"/></a>
+    <a class="eday" style="font-size: 230%;" data-toggle="tooltip" data-placement="bottom" id="em3" data-original-title="Linkedin"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAC80lEQVRoge2YS0hUURjHf+femXF8jFjYg8KIzLFIqaywhUGLKKLCrW2CKFoUEUlg0aooHy2koDZFtLSgIOgBtcgoN70hNdAIQiEkKMOZdNS597S4FYwzZ6YzeWcK7m9z4Xzf+e7/z3fOuQ/w8PDwyCciY0ZLfyOCoyDXA8XuSwLgO/ACSScdNXfSJaY3cLyvHWiZRWH6CNFK26qTyrByYkt/I0LedkWULkLuoq32bqqQoZ7EUdcE6WKLZlVIbQC5zg0tWSFYrwr50kwrSTlqWzA94VwNE/yFztVdQqpAmg6kwLYIh2I8OVhN9Fw9Tw9VU1USc8zkCT0D0xNc3R1m0/IyigMmDZVlXGkKOx3JE9odWFuR2M11S0L/UQcMkzfDkYShV0ORXOwBJXoG/IXs6xqk58M3vk9ZPH4/yv7rg85GzhPpTqFkDJPBSJBNlwZyfQop0TMQiySudysO1s8lFAwlx39hmFBQDPFJZ45tgSFAmOALgOnnT17L/t6AHUdeaEgaFkd6MsYX+8c5tm0RW1fMZVl5IZNxm95PUW68/syVZ1+ZNIuy6qSegSxZvSDAw8NrmB8K/B4L+g0aKstoqCxj78YIOy6/Y2S6CITmuTLbYlNx60BtgviZ1FWE6NoTRkxFtWvnxEBleeZTanPVHLaHS7SfKTkxYEvJ+e5htlx8S9O1dzwaGE2Z11Q3D6wprdo52QOn7n/kdPcX8BWAjHOzb4B7+8NsWzk3Ia9+aalzSvn/vHZOOnCxZwT8QWeDGiaWr4izD4aS8haWBkDaWrVdNyAlfB23SDjnDYPekVhSbqjA50zQwHUDQkDyQ0rwbSKuyP3HDLiNZyDfeAbyjWcg3/z3BtSfQcf7kp8osTH1F1ewNHNcp9ZM2mtSak33Mhdl5t+5VIV14tnmwpgqkG4JvdS5g8sotagNSDpdkZINUiq1qA101NxBiFZXBOkgOENH7T11OBMnendii2YEG1D9sZ59osBzpOxMJ97Dw8Mj//wAX47WWv18EiQAAAAASUVORK5CYII="/></a>
+    <a class="eday" style="font-size: 230%;" data-toggle="tooltip" data-placement="bottom" id="em4" data-original-title="Twitter"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAADz0lEQVRoge2XTWgdVRiGn+/MpGnv3LRoqC4UhCz8I8RFRClSXdgqWkuV4CRpi1gqglZTuhFXkiDdCVIKBfEHo1Bzr0JRtGAqWhTBQhsaFX9ADbZisbXaJnPb5t6Z+VyotU0yc89MYlGYZzcz73fO+84ZzjcHCgoKCgoK/sfIJZ2tOnmdq+ZxYLXCNUCowvdG9b3QNbvo8Y7NLFm0O+iqry9/njRk0wDOSO2e6JvS+wxKnNv4oBr3hmBIkacBN8FKgLIt6vNe4u0Tbc65xXch8gSxfBn1eU/mC1A9Xna09JPAcNhb3prXvzMy9QIij1rKDwFdQAtwLJKoE3/Zb0likzqxercDyxQGnJHaLqrqWLv+e4xqsD6DeYBu/jR/0gj30lB13wjuTBKnBlCJO85fiD7maG0P1dOXW1tRFWJ91lr/DyHI/ljZ4bjud8bheJIwNQA66/laR51xtxqstnHRUjlzMyIdzZWzcEF7gFsQ2VT3y18kCVMDCGZijttXqzLqVKb28Nbk9Wn1Mdpp53dOfhXiVZHvvZMmSg0QLT6zHySY+6nc70TmK6cSvOtUamvZq60zFSralsXxDAbC3qWfNhMlbGl/sW75lFSCVxQGEhQCrAFd40zVJqnU9in6mREdC018VCJJ3D2aojptI2veyF5Tz22tjSlcm9tMDkS5O+wrjzbTpW+jI8EGZ1GtR2LpUxhfOHvNMYZZXXkuUj8hFW0XZEcsisDZhbFmhdbPeT/YCNNXQOTjCy6XzMtSBgS+5iGp2WhTAzT88mGEAwtjyx5FP7HVpjcywCBbgMa8HGXGpO79FymbCRq+dwjVDVy6ECcjKX1gK24aACDqa3vTqNyGcDC/LztEeRFf6rZ6qwAAsXAVyCDKq4BVk8nB2VBlZ5aC9E58MatQ3fJvnuEEdtLv/ZylxnoFIomHgF8yu7LnSNiY3p61yDoAftsJE5t1wO9ZJ7EgFuERNrZPZi20DwA0+ksHIie6Ffgw60RpqMhQ6Jf35anN/UW3VGvdkXKfiK5ESTzyWTAc+d4mRDRPcaYVuJDGg6UxgaMo3XnHAIYj8TbnNQ95VmCvtjpBrV9hmyhdOedVRZ6J/dL2+ZiHlAAtI8FNGHFVY0+FK1SlQ+AOYCUwn5PWhKCbw962j+YxxnkS+0CjtfGjW295SpGtKKUF2P5PK/JcPF163vZP04bmvnYHVxqHjcDDApkP6QrjqL4ct4av88Blp/KYTCPbi61O3ehgVhDrCgydxLockXZgKXAKZRLDBKrfouZgZMwo/pIjC226oKCgoKCg4L/CH/2pQ2x506tNAAAAAElFTkSuQmCC"/></a>
+    <a class="eday" style="font-size: 230%;" data-toggle="tooltip" data-placement="bottom" id="em5" data-original-title="YouTube"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAC4ElEQVRoge2YT0hUQRzHP/PyX1rmJgbSqhhBB7sVGFFRFIR06GKH6GTdN7p4ibAg6hKRREiUBWFFdYkIi7oESZkgXYQoqGjdg6fN1t6qqPvr4Jrre7P5dmffpvA+MPD4zcxvft/9zc6b94OAgICAgIBVjPI6UA5SyzRhoBFFE9AAbAZC6VaTbhXpKWsznqeAyYznn8B4usURYljESBEFoswxqt4TNxIgYLGXUwjHUbQClV7FFogkwgcUD3hLrwLRDdIKkBbK2Mgz4LCvIXpF8QKbo2qYGWeXpZ0Q4hIrJXgAoY1KLuq6XBmQ/VQwxxiwwffAciNBkno1TDLT6M7ALLtYecEDVLOOVqdRt4W2FCGY/Eix1WnSCWguQij54kmAWQauvobmFiMXWREvAhRho0V2HoLejxDphqoC/5Us94+ry8B644VKSqE9Ao++QvtpsPSndR7UOQ06z1WFWo3qWohcg5tDsH23uT+hThxHv24LFU7AAtt2wI0BuPAYNjWYeCqjjbJMg1uA+CAAQCk4cAz6PkHHeSgtz89PnCUT/d1COiqqoKML7o3MC8qVNX9vuEC2u1AxEIHpyeXHObGWXuhKNENs5u/1/jBlw8Mr0HcZZqZznS3Uk8g0uAUobMQHASLwqg96OiE+lq+X3+oJc5kGtwDBztd7Vj4PQ3cERt6ZevrlNGTbQoUhPgZ3uuD5bUilzP0J406TTsCE8UKzM/C0B3rPgZ1YfrxXlJcMCDHvn/oaBvvh+hkY/WLgJAvCD6dJl4FvRot0HjGavgyu2HTvge9+RmCIKzadALMM+IuHDJQwiOa4WgEkmGTIaXQJUG+YAm4VJaRcUPQ4KxKQ7S4U5yzw0u+YcqAfm3O6jn+VFhX7OEmKE/+ttAiDCPcZ4G5OpUUdsocQFmFSNKEIowgjNKKoIUUNEEJRzeInaTmLopPAws1tIt0yC7yjCDEgiiLKLDGvxd2AgICAgIBVzR8UibLdyBYx4AAAAABJRU5ErkJggg=="/></a>
+  </div>
+</div>
+<div class="card border-info mt-1 mb-2" style="width: 100%;">
+  <div class="card-body">
+    <h5 class="card-title" style="color: teal;">Chat Room</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Enter a chat room to chat live with the Atlanta Staff</h6>
+    <a href="https://code-to-give-mavericks.herokuapp.com/" target="_blank" style="float: center;" class = "btn btn-dark mt-1 mb-1 mr-2 btn-lg">Start Live Chat</a>
+    <hr>
+    <small class="text-muted bg-white text-center"><strong>Available chat rooms: 44, 720, 23</strong></small>
+</div>
+</div>
+<div class="card border-info mt-1 mb-2" style="width: 100%;">
+  <div class="card-body">
+    <h5 class="card-title" style="color: teal;">Tip</h5>
+    <h6 class="card-subtitle mb-2 text-muted">• Click the staff & client name to get all the posts posted by them</h6>
+    <hr>
+    <h6 class="card-subtitle mb-2 text-muted">• Click the title to get a detailed view of the post (to update and delete post)</h6>
+</div>
+</div>
+<div class="card border-info mt-1 mb-2" style="width: 100%;">
+  <div class="card-body">
+    <h5 class="card-title" style="color: teal;">Mood Today?</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Mention the below emojis to express your mood in the post</h6>
+    <a class="eday" style="font-size: 230%;" data-toggle="tooltip" data-placement="bottom" id="em1" onclick="CopyToClipboard('em1');return false;" data-original-title="Happy">😄</a>
+    <a class="eday" style="font-size: 230%;" data-toggle="tooltip" data-placement="bottom" id="em2" onclick="CopyToClipboard('em2');return false;" data-original-title="Laugh out loud">😂</a>
+    <a class="eday" style="font-size: 230%;" data-toggle="tooltip" data-placement="bottom" id="em3" onclick="CopyToClipboard('em3');return false;" data-original-title="Love">😍</a>
+    <a class="eday" style="font-size: 230%;" data-toggle="tooltip" data-placement="bottom" id="em4" onclick="CopyToClipboard('em4');return false;" data-original-title="Satisfied">😌</a>
+    <a class="eday" style="font-size: 230%;" data-toggle="tooltip" data-placement="bottom" id="em5" onclick="CopyToClipboard('em5');return false;" data-original-title="Sad">🤧</a>
+    <a class="eday" style="font-size: 230%;" data-toggle="tooltip" data-placement="bottom" id="em6" onclick="CopyToClipboard('em6');return false;" data-original-title="Exhausted">😵</a>
+    <a class="eday" style="font-size: 230%;" data-toggle="tooltip" data-placement="bottom" id="em7" onclick="CopyToClipboard('em7');return false;" data-original-title="Angry">😡</a>
+    <a class="eday" style="font-size: 230%;" data-toggle="tooltip" data-placement="bottom" id="em8" onclick="CopyToClipboard('em8');return false;" data-original-title="Fingers Crossed">🤞</a>
+    <a class="eday" style="font-size: 230%;" data-toggle="tooltip" data-placement="bottom" id="em9" onclick="CopyToClipboard('em9');return false;" data-original-title="Super">👌</a>
+    <a class="eday" style="font-size: 230%;" data-toggle="tooltip" data-placement="bottom" id="em10" onclick="CopyToClipboard('em10');return false;" data-original-title="Claps">👏</a>
+  </div>
+  <small class="card-footer text-muted bg-white text-center"><strong>Click the emoji to copy it to the clipboard</strong></small>
+</div>
+            <div class="card border-info mt-2 mb-2" style="width: 100%;">
+              <img class="card-img-top" src="https://content.atlantamission.org/content/uploads/2021/11/03210350/Jon-Lewis-Story.jpg" alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title" style="color: teal;">Blogs - THE LIGHT</h5>
+                <p class="card-text">How to schedule a counselling session?</p>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">How Our Homeless Shelters Work</li>
+                <li class="list-group-item">Morgan Stanley & Atlanta Mission Partnership</li>
+                <li class="list-group-item">Homelessness and Addiction</li>
+                <li class="list-group-item">A Day in the Life of an Atlanta Mission Counselor</li>
+              </ul>
+            </div>
+{% endblock sidebar %}

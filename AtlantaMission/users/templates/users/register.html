@@ -1,0 +1,58 @@
+{% extends "microblog/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    <title>Register</title>
+{% endblock title %}
+
+{% block authentication %}
+<div class="mt-2 pt-2 ">
+<form method="POST" enctype='multipart/form-data'>
+    {% csrf_token %}
+    <div class="form-group">
+      <legend class="border-bottom mb-4"><h2>Create your Atlanta account</h2></legend>
+      {{form | crispy }}
+      <small id="emailHelp" class="form-text text-muted">We're delighted to have you here!</small>
+      <small id="emailHelp" class="form-text text-muted">Our Community anticipates to see your first post :) </small>
+    </div>
+    <div>
+    <button type="submit" class="btn btn-primary btn-outline-primary">Sign Up</button>
+    </div>
+  </form>
+  <div class="border-top pt-2 mt-3 mb-5 pb-2">
+    <small class="text-muted">
+        Already part of the community?
+        <a href="{% url 'login' %}">Sign in</a>
+    </small>
+  </div>
+</div>
+{% endblock authentication %}
+
+{% block sidebar %}
+  <div class="card border-info mt-1 mb-4" style="width: 100%;">
+    <div class="card-body">
+      <h5 class="card-title">This Easter, you can help restore lives. Give meals and HOPE!</h5>
+      <p class="card-text">Help transform the life of someone experiencing homelessness and hunger this Easter. Your gift today supports life-changing programs that ensure every person in need can be safe, fed, and loved.</p>
+    </div>
+  </div>
+  
+  <!-- <div class="content-section">
+    <h4>Harry Potter 20th Anniversary: Return to Hogwarts</h4>
+    <p class='text-muted'> Cast members from all "Harry Potter" films reunite in a retrospective special to celebrate the anniversary of the first film.
+    </p>
+  </div> -->
+  <div class="card border-info mt-2 mb-2" style="width: 100%;">
+    <img class="card-img-top" src="https://content.atlantamission.org/content/uploads/2021/11/03210350/Jon-Lewis-Story.jpg" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title" style="color: teal;">Blogs - THE LIGHT</h5>
+      <p class="card-text">How to schedule a counselling session?</p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">How Our Homeless Shelters Work</li>
+      <li class="list-group-item">Morgan Stanley & Atlanta Mission Partnership</li>
+      <li class="list-group-item">Homelessness and Addiction</li>
+      <li class="list-group-item">A Day in the Life of an Atlanta Mission Counselor</li>
+    </ul>
+  </div>
+  <!-- <span class="badge badge-primary">{{ ARAVIND_BDAY | date:"d M" }}</span> -->
+{% endblock sidebar %}
