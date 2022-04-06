@@ -1,0 +1,166 @@
+C:\Users\srisp\Desktop\CallodineBlog>python manage.py shell
+Python 3.9.5 (tags/v3.9.5:0a7dcbd, May  3 2021, 17:27:52) [MSC v.1928 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from microblog.models import Post
+>>> from django.contrib.auth.models import User
+>>> User.objects.all()
+<QuerySet [<User: sribalaji>, <User: testuser>]>
+>>> User.objects.first()
+<User: sribalaji>
+>>> User.objects.last()
+<User: testuser>
+>>> User.objects.filter(username='sribalaji')
+<QuerySet [<User: sribalaji>]>
+>>> User.objects.filter(username='sribalaji').first()
+<User: sribalaji>
+>>> user = User.objects.filter(username='sribalaji').first()
+>>> user
+<User: sribalaji>
+>>> used.id
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+NameError: name 'used' is not defined
+>>> user.id
+1
+>>> user.pk
+1
+>>> another_user = User.objects.get(id=2)
+>>> another_user
+<User: testuser>
+>>> Pr
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+NameError: name 'Pr' is not defined
+>>> Posy.objects.all()
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+NameError: name 'Posy' is not defined
+>>> Post.objects.all()
+<QuerySet []>
+>>> user
+<User: sribalaji>
+>>> post1 = Post(title = 'First Post here. Me at the Zoo', author = 'Sri Balaji', username=user, content = 'Forcing ourselves or others to always be positive can be harmful to our well-being and our relationships. There is a better approach.')
+>>> post1.save()
+>>> Post.objects.all()
+<QuerySet [<Post: Post object (1)>]>
+
+------------------
+
+>>> Post.objects.all()
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+NameError: name 'Post' is not defined
+>>> from microblog.models import Post
+>>> from django.contrib.auth.models import User
+>>> Post.objects.all()
+<QuerySet [<Post: First Post here. Me at the Zoo>]>
+>>> user = User.objects.filter(username='sribalaji').first()
+>>> user
+<User: sribalaji>
+>>> user2 = User.objects.all().last()
+>>> user2
+<User: testuser>
+>>> p1 = Post(title = 'Post again! Happy Holidays', author = 'Sri Balaji', username=user, content = 'I have 3 big surprises for you this new year, the first of which I will announce on Jan 1st. But can you guess without any hint from me')
+>>> p1.save()
+>>> p2 = Post(title = 'Tell me about your best moments of this year', author = 'Priya', username=user2, content = 'List out your favorite events in 2021. I know you will have more to say. Tell me the best 5 events happened to you')
+>>> p2.save()
+>>> Post.objects.all()
+<QuerySet [<Post: First Post here. Me at the Zoo>, <Post: Post again! Happy Holidays>, <Post: Tell me about your best moments of this year>]>
+>>>
+
+## We can also use username_id = user.id instead of username = user
+
+>>> p1
+<Post: Post again! Happy Holidays>
+>>> p1.content
+'I have 3 big surprises for you this new year, the first of which I will announce on Jan 1st. But can you guess without any hint from me'
+>>> p1.date_posted
+datetime.datetime(2021, 12, 31, 6, 54, 6, 714277, tzinfo=datetime.timezone.utc)
+>>> p1.author
+'Sri Balaji'
+>>> p1.username
+<User: sribalaji>
+>>> p1.username_id
+1
+>>> p1.username.email
+'srisvit@gmail.com'
+>>> user
+<User: sribalaji>
+>>> user.email
+'srisvit@gmail.com'
+>>> user.first
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'User' object has no attribute 'first'
+>>> user.firstname
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'User' object has no attribute 'firstname'
+>>> user.first_name
+'Sri Balaji'
+>>> user.last_name
+'M'
+>>> user
+<User: sribalaji>
+>>> user.post_set
+<django.db.models.fields.related_descriptors.create_reverse_many_to_one_manager.<locals>.RelatedManager object at 0x000001789E462F70>
+>>> user.post_set.all()
+<QuerySet [<Post: First Post here. Me at the Zoo>, <Post: Post again! Happy Holidays>]>
+>>> user.post_set.create(title='Third Post', author = 'Sri Balaji', content='Writing my third post to the Minichat')
+<Post: Third Post>
+>>> User.objects.all()
+<QuerySet [<User: sribalaji>, <User: testuser>]>
+>>> Post.objects.all()
+<QuerySet [<Post: First Post here. Me at the Zoo>, <Post: Post again! Happy Holidays>, <Post: Tell me about your best moments of this year>, <Post: Third Post>]>
+>>> exit()
+
+### Pagination
+
+C:\Users\srisp\Desktop\CallodineBlog>python manage.py shell
+Python 3.9.5 (tags/v3.9.5:0a7dcbd, May  3 2021, 17:27:52) [MSC v.1928 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from django.core.paginator import Paginator
+>>> ls = ['1','2','3','4','5','6','7']
+>>> p=Paginator(ls,3)
+>>> p.pages()
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'Paginator' object has no attribute 'pages'
+>>> p.page()
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+TypeError: page() missing 1 required positional argument: 'number'
+>>> p.page(2)
+<Page 2 of 3>
+>>> for i in p:
+... print(i)
+  File "<console>", line 2
+    print(i)
+    ^
+IndentationError: expected an indented block
+>>> for i in p:
+...     print(i)
+...
+<Page 1 of 3>
+<Page 2 of 3>
+<Page 3 of 3>
+>>> p1 = p.page(2)
+>>> p1.number
+2
+>>> p1.object_list()
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+TypeError: 'list' object is not callable
+>>> p1.object_list
+['4', '5', '6']
+>>> p1
+<Page 2 of 3>
+>>> p1.has_previous()
+True
+>>> p1.has_next()
+True
+>>> p1.next_page_number()
+3
+>>>

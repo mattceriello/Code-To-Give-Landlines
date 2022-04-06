@@ -1,0 +1,76 @@
+## Check the version of Django
+python -m django --version
+
+## To see the options available in the Django
+django-admin
+
+## Go to the corresponding folder
+## Run the below command to start a new django Project
+django-admin startproject CallodineBlog
+django-admin startproject <project_name>
+
+## Use the tree command to see the tree structure of entire directory
+
+## To run the current Project, use the below command
+python manage.py runserver
+
+## It will run the server in the localhost
+
+## Django can have multiple projects running in the same Project
+## We can create application in the Project
+python manage.py startapp microblog
+
+## In the urls.py of Project, we can add all the routes
+## Inside the created application we created a new python file views.py which has a few functions that gets a request as a parameter
+## and returns a HTTP Response as output (a web page)
+
+## So again we created another urls.py inside the application directory which helps to route pages with the application. This imports views
+## py file and routes based on It
+
+## We created a templates/microblog inside the application folder
+## Then we added all our templates such as home.html and about.html
+
+## Also we need to add our application in the installed apps section of the project which will be availablein the settings.py
+## We took the class name from the apps.py from application folder and added it in the INSTALLED_APPS section as one of the strings
+## It is added as microblog.apps.MicroblogConfig  - It helps django to correctly identify the templates corresponding to the applications
+
+
+## We had a base html template which will be used by all the pages by default. We changes the content of home and about page.
+## There is a block placeholder in the base html which can be overrided by the child pages such as home and about
+## Similary we have for loop, if else and much more available in the django.
+
+## In order to add css, we created a new directory inside the application directory as static/microblog
+## We loaded the static folder in our base template to use it.
+<link rel="stylesheet" type="text/css" href="{% static 'microblog/main.css' %}">
+
+## In the same way, to route the page, we used href="{% url 'miniblog' %}"
+## Here miniblog is the name we provided in the urls.py name='miniblog' and name = 'profile'
+
+## To activate the admin page, we need to create a superuser 
+python manage.py createsuperuser
+
+## Initally, we could not do it as we don't have -- no such table: auth_user
+## So we need to make migrations which prepare django to update data into the database
+python manage.py makemigrations
+## At first, we'll get no changes detected. But after doing it, we can start migrate processes
+python manage.py migrate
+## It'll create the necessary tables for the project
+
+## Now, we can create the superuser using the below command. Enter username, email and password for the superuser
+python manage.py createsuperuser
+Username (leave blank to use 'srisp'): sribalaji
+Email address: srisvit@gmail.com
+Password:
+Password (again):
+Superuser created successfully.
+
+## When we restart the server, we can login to our admin portal and add new users and set permissions if we need one.
+
+## Databases - Django had ORM - Object relational mapper (helps to access our database in an easily used object oriented way).
+## So we can use different databases according to our convenience
+## Here we use sqllite for testing and postgres for production
+## We can represent our database as classes in django. We call those classes as models
+
+
+
+

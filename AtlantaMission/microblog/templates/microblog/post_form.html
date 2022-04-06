@@ -1,0 +1,57 @@
+{% extends "microblog/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    <title>New Post</title>
+{% endblock title %}
+
+{% block authentication %}
+<div class="mt-2 pt-2 ">
+<form method="POST" enctype='multipart/form-data'>
+    {% csrf_token %}
+    <div class="form-group">
+      <legend class="border-bottom mb-4"><h2>Post your thoughts</h2></legend>
+      {{form | crispy }}
+      <small id="emailHelp" class="form-text text-muted">If needed ask for assistance :)</small>
+    </div>
+    <div>
+    <button type="submit" class="btn btn-primary btn-outline-primary">Post it</button>
+    </div>
+  </form>
+  <div class="border-top pt-2 mt-3 mb- pb-2">
+    <small class="text-muted">
+        You can update your post anytime!
+    </small>
+  </div>
+</div>
+
+{% endblock authentication %}
+{% block sidebar %}
+<div class="card border-info mt-1 mb-2" style="width: 100%;">
+    <div class="card-body">
+      <h5 class="card-title" style="color: teal;">Mood Today?</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Mention the below emojis to express your mood in the post</h6>
+      <a class="eday" style="font-size: 230%;" data-toggle="tooltip" data-placement="bottom" id="em1" onclick="CopyToClipboard('em1');return false;" data-original-title="Happy">😄</a>
+      <a class="eday" style="font-size: 230%;" data-toggle="tooltip" data-placement="bottom" id="em2" onclick="CopyToClipboard('em2');return false;" data-original-title="Laugh out loud">😂</a>
+      <a class="eday" style="font-size: 230%;" data-toggle="tooltip" data-placement="bottom" id="em3" onclick="CopyToClipboard('em3');return false;" data-original-title="Love">😍</a>
+      <a class="eday" style="font-size: 230%;" data-toggle="tooltip" data-placement="bottom" id="em4" onclick="CopyToClipboard('em4');return false;" data-original-title="Satisfied">😌</a>
+      <a class="eday" style="font-size: 230%;" data-toggle="tooltip" data-placement="bottom" id="em5" onclick="CopyToClipboard('em5');return false;" data-original-title="Sad">🤧</a>
+      <a class="eday" style="font-size: 230%;" data-toggle="tooltip" data-placement="bottom" id="em6" onclick="CopyToClipboard('em6');return false;" data-original-title="Exhausted">😵</a>
+      <a class="eday" style="font-size: 230%;" data-toggle="tooltip" data-placement="bottom" id="em7" onclick="CopyToClipboard('em7');return false;" data-original-title="Angry">😡</a>
+      <a class="eday" style="font-size: 230%;" data-toggle="tooltip" data-placement="bottom" id="em8" onclick="CopyToClipboard('em8');return false;" data-original-title="Fingers Crossed">🤞</a>
+      <a class="eday" style="font-size: 230%;" data-toggle="tooltip" data-placement="bottom" id="em9" onclick="CopyToClipboard('em9');return false;" data-original-title="Super">👌</a>
+      <a class="eday" style="font-size: 230%;" data-toggle="tooltip" data-placement="bottom" id="em10" onclick="CopyToClipboard('em10');return false;" data-original-title="Claps">👏</a>
+    </div>
+    <small class="card-footer text-muted bg-white text-center"><strong>Click the emoji to copy it to the clipboard</strong></small>
+  </div>
+  <div class="card border-info mt-1 mb-2" style="width: 100%;">
+    <div class="card-body">
+      <h5 class="card-title" style="color: teal;">Tip</h5>
+      <h6 class="card-subtitle mb-2 text-muted">You will get the tone of your post in the detailed view of the post</h6>
+  </div>
+  </div>
+
+  <img src="https://content.atlantamission.org/content/uploads/2021/08/13175609/cathyanddaughters.jpg" class="img-fluid card border-info rounded mx-auto d-block mt-2 mb-3" alt="Callodine Poster">
+
+<!-- <blockquote class="twitter-tweet" data-lang="en" data-theme="light"><p lang="en" dir="ltr">Remember, Red, hope is a good thing, maybe the best of things, and no good thing ever dies. I will be hoping that this letter finds you, and finds you well. HOPE!<a href="https://twitter.com/hashtag/shawshankredemption?src=hash&amp;ref_src=twsrc%5Etfw">#shawshankredemption</a> <a href="https://twitter.com/hashtag/hope?src=hash&amp;ref_src=twsrc%5Etfw">#hope</a> <a href="https://twitter.com/hashtag/movies?src=hash&amp;ref_src=twsrc%5Etfw">#movies</a> <a href="https://twitter.com/hashtag/movie?src=hash&amp;ref_src=twsrc%5Etfw">#movie</a></p>&mdash; Sri Balaji (@isribalaji) <a href="https://twitter.com/isribalaji/status/1321120386780717061?ref_src=twsrc%5Etfw">October 27, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> -->
+{% endblock sidebar %}
